@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101820">
+<meta name="description" content="Little Things — personal lists and notes, simple, focused, and offline-ready.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Little Things">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>Little Things — List & Notes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap');
+:root{--bg:#101820;--paper:#1b2732;--ink:#edf2f5;--muted:#91a0ad;--line:#30404d;--purple:#e4773f;--purple2:#382a24;--pink:#e4773f;--yellow:#d6a85f;--mint:#5cae9b;--shadow:0 14px 34px #050a0f66}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#203342 0%,transparent 38%),var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:100px}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+.app{max-width:760px;margin:auto;padding:18px 16px 30px}
+header{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 20px}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(145deg,#f09254,#bd5429);display:grid;place-items:center;color:#101820;font-size:24px;box-shadow:0 8px 18px #0006}
+.brand h1{font:700 22px 'Space Grotesk';margin:0;letter-spacing:-.8px;text-transform:uppercase}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:2px;letter-spacing:1.2px;text-transform:uppercase}
+.icon-btn{width:42px;height:42px;border-radius:12px;background:#1b2732;color:var(--ink);font-size:19px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{background:linear-gradient(118deg,#263b4b 0%,#17232d 72%);color:#f4f6f7;border:1px solid #3b5363;border-radius:17px;padding:17px 18px 15px;position:relative;overflow:hidden;box-shadow:0 12px 25px #050a0f66}
+.hero:after{content:'✳';position:absolute;font-size:125px;right:20px;top:-25px;color:#e4773f24;transform:rotate(12deg)}
+.hero .eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#f0a16e;font-weight:800}.hero h2{font:700 25px 'Space Grotesk';line-height:1.12;margin:7px 0 5px;max-width:420px;letter-spacing:-.7px}.hero p{font-size:11px;color:#b9c6cf;margin:0;line-height:1.45}
+.stats{display:flex;gap:8px;margin-top:13px;position:relative;z-index:1}.stat{background:#ffffff0c;border:1px solid #ffffff20;padding:7px 10px;border-radius:10px;font-size:9px;color:#bdc9d1}.stat b{font:700 19px 'Space Grotesk';display:block;color:#fff}
+.tabs{display:flex;background:#18232c;padding:5px;border:1px solid var(--line);border-radius:13px;margin:20px 0 17px;gap:4px}
+.tab{flex:1;padding:12px 8px;border-radius:10px;background:transparent;color:#9aa8b3;font-weight:700;font-size:13px}.tab.active{background:#304352;color:#ffad7e;box-shadow:inset 0 -2px #e4773f}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 12px}.section-head h3{font:700 20px 'Space Grotesk';margin:0;letter-spacing:-.5px}.sub{color:var(--muted);font-size:10px;line-height:1.45}
+.add-card{background:#1b2732;border:1px solid #3a4b58;border-radius:16px;padding:13px;box-shadow:var(--shadow);margin-bottom:15px}
+.add-row{display:flex;gap:9px}.add-row input{min-width:0;flex:1;border:0;outline:0;padding:9px 5px;font-size:14px;color:var(--ink);background:transparent}.add-row input::placeholder{color:#81909b}
+.primary{background:linear-gradient(135deg,#ef9257,#d96b36);color:#171d22;border-radius:11px;padding:0 17px;font-weight:800;font-size:13px;box-shadow:0 5px 12px #0004}.primary:active{transform:scale(.97)}
+.mini-tools{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}.chip{background:#273641;color:#b3c0c9;border:1px solid #3a4b58;border-radius:9px;padding:7px 11px;font-size:11px;font-weight:700}.chip.selected{background:#493326;color:#ffad7e;border-color:#925a3b}
+.task-list{display:grid;gap:9px}.task{background:#1b2732;border-radius:14px;padding:14px 13px;display:flex;align-items:center;gap:11px;box-shadow:0 5px 16px #0003;border:1px solid #30404d;transition:.2s}.task.done{opacity:.65}.check{width:26px;height:26px;flex:none;border:2px solid #61717d;border-radius:8px;background:#202f3a;color:#15211f;font-size:15px}.task.done .check{background:#62b69d;border-color:#62b69d}.task-text{flex:1;min-width:0;font-size:14px;overflow-wrap:anywhere}.task.done .task-text{text-decoration:line-through;color:#81909b}.task-meta{font-size:10px;color:#a09aaf;margin-top:4px}.task-actions{display:flex;gap:3px}.tiny{background:transparent;color:#a6a0b4;padding:6px;font-size:16px}.priority{width:7px;height:7px;border-radius:50%;background:#ff9aab;display:inline-block;margin-right:5px}
+.empty{text-align:center;padding:30px 15px;color:#91a0ad}.empty .emoji{font-size:34px}.empty b{display:block;color:#dbe3e8;margin:8px}
+.note-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.note{border-radius:14px;padding:15px;min-height:150px;position:relative;box-shadow:0 7px 20px #0003;display:flex;flex-direction:column;overflow:hidden;border:1px solid #455460;background:linear-gradient(145deg,#2b3b47,#202d37)}
+.note:nth-child(4n+1){background:linear-gradient(145deg,#34434b,#26343d)}.note:nth-child(4n+2){background:linear-gradient(145deg,#29443f,#203631)}.note:nth-child(4n+3){background:linear-gradient(145deg,#3a3948,#2b2a38)}.note:nth-child(4n){background:linear-gradient(145deg,#49382f,#332a26)}
+.note h4{font:700 17px 'Space Grotesk';margin:0 0 8px;overflow-wrap:anywhere;color:#f1f4f5}.note p{font-size:12px;line-height:1.6;white-space:pre-wrap;margin:0;overflow-wrap:anywhere;flex:1;color:#c0cbd2}.note-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:10px;color:#9baab4}.note-actions button{background:#ffffff16;color:#e4e9ed;border-radius:8px;padding:5px 7px;margin-left:3px}
+.fab{position:fixed;bottom:22px;right:max(20px,calc((100vw - 760px)/2 + 20px));width:60px;height:60px;border-radius:17px;background:linear-gradient(145deg,#f09254,#cf602f);color:#15202a;font-size:29px;box-shadow:0 10px 24px #0008;z-index:5}
+.modal-bg{position:fixed;inset:0;background:#20183b77;display:none;align-items:flex-end;justify-content:center;z-index:10;padding:12px}.modal-bg.show{display:flex}.modal{background:#1b2732;color:var(--ink);width:min(100%,560px);border:1px solid #3a4b58;border-radius:20px;padding:20px;max-height:90vh;overflow:auto;box-shadow:0 20px 60px #0009}
+.modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal h3{font:900 20px 'Nunito';margin:0}.close{background:#2b3a45;color:#eaf0f3;width:34px;height:34px;border-radius:10px;font-size:18px}
+.field{margin:12px 0}.field label{display:block;font-size:11px;font-weight:800;color:#a6b3bc;margin-bottom:7px;letter-spacing:.8px}.field input,.field textarea,.field select{width:100%;border:1px solid #3a4b58;border-radius:11px;padding:12px;outline:0;background:#14202a;color:var(--ink)}.field textarea{min-height:150px;resize:vertical;line-height:1.5}
+.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-actions button{flex:1;min-height:47px}
+.secondary{background:#2b3a45;color:#dce4e9;border:1px solid #40515d;border-radius:11px;font-weight:800}
+.settings-row{display:flex;gap:8px;flex-wrap:wrap}.font-choice{padding:9px 12px;border-radius:10px;background:#273641;color:#bdc8cf;border:1px solid #3a4b58;font-size:12px}.font-choice.active{background:#493326;color:#ffad7e;border-color:#925a3b}
+.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(15px);background:#e4773f;color:#17212a;padding:10px 16px;border-radius:30px;font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:20}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.search-wrap{display:flex;align-items:center;gap:10px;background:#1b2732;border:1px solid #3a4b58;border-radius:13px;padding:0 12px;margin:-5px 0 6px;min-height:48px;box-shadow:0 7px 18px #0003}
+.search-wrap>span{font-size:24px;color:#f09254;line-height:1}
+.search-wrap input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#edf2f5;font-size:13px}
+.search-wrap input::placeholder{color:#81909b}
+.search-wrap button{background:transparent;color:#9eabb5;font-size:22px;padding:4px 2px}
+.search-caption{font-size:9px;color:#81909b;margin:0 4px 14px}
+.search-hit{outline:1px solid #e4773f55}
+.preview-bg{display:none;position:fixed;inset:0;z-index:30;background:#080d12f2;padding:0;overflow:auto}
+.preview-bg.show{display:block}
+.preview-sheet{min-height:100dvh;max-width:900px;margin:auto;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);transition:background .2s,color .2s}
+.preview-sheet.theme-charcoal{background:#151e26;color:#edf2f5}
+.preview-sheet.theme-paper{background:#f2eee6;color:#242a2d}
+.preview-sheet.theme-forest{background:#172a25;color:#e5eee9}
+.preview-sheet.theme-sand{background:#e6d5b9;color:#30271d}
+.preview-sheet.theme-navy{background:#142437;color:#e9f0f7}
+.preview-toolbar{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid currentColor;opacity:.9}
+.preview-toolbar button{background:transparent;color:inherit;font-weight:700;font-size:13px;padding:9px 10px}
+.preview-tools{display:flex;gap:8px}
+.preview-tools button{border:1px solid currentColor;border-radius:9px}
+.preview-content{width:min(100%,720px);margin:0 auto;padding:34px 25px 50px;flex:1}
+.preview-kicker{font-size:10px;letter-spacing:2px;font-weight:800;color:#e4773f;margin-bottom:18px}
+.preview-content h1{font:700 clamp(27px,6vw,42px) 'Space Grotesk';line-height:1.13;letter-spacing:-1px;margin:0 0 12px;overflow-wrap:anywhere}
+.preview-date{font-size:11px;opacity:.58;margin-bottom:28px}
+.preview-body{font:400 17px/1.85 'DM Sans',sans-serif;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
+.preview-bottom{padding:17px 20px calc(20px + env(safe-area-inset-bottom));border-top:1px solid currentColor;background:#00000012}
+.preview-palette-label{font-size:10px;letter-spacing:1.5px;font-weight:800;opacity:.65;margin-bottom:12px}
+.preview-palette{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.swatch{display:flex;align-items:center;gap:7px;background:#ffffff10;border:1px solid #ffffff30;border-radius:30px;padding:6px 10px;color:inherit;font-size:10px}
+.swatch i{width:17px;height:17px;border-radius:50%;display:block;border:1px solid #ffffff55}
+.swatch[data-theme="charcoal"] i{background:#151e26}.swatch[data-theme="paper"] i{background:#f2eee6}
+.swatch[data-theme="forest"] i{background:#172a25}.swatch[data-theme="sand"] i{background:#e6d5b9}.swatch[data-theme="navy"] i{background:#142437}
+.swatch.active{border-color:#e4773f;box-shadow:0 0 0 1px #e4773f}
+@media(min-width:700px){.preview-bg{padding:24px}.preview-sheet{min-height:calc(100dvh - 48px);border-radius:18px;overflow:hidden;box-shadow:0 20px 70px #0009}.preview-content{padding-top:55px}.preview-toolbar{padding:16px 24px}}
+
+.hidden{display:none!important}
+@media(min-width:600px){.app{padding:24px 22px}.note-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.modal-bg{align-items:center}.modal{border-radius:25px}}
+@media(max-width:360px){.brand h1{font-size:19px}.hero h2{font-size:24px}.note-grid{gap:8px}.note{padding:12px}}
+
+:root{--ui-scale:1.15;--density-gap:1}
+body{font-size:calc(16px * var(--ui-scale))}
+.brand h1{font-size:calc(22px * var(--ui-scale))}
+.brand small{font-size:calc(10px * var(--ui-scale))}
+.hero .eyebrow{font-size:calc(10px * var(--ui-scale))}
+.hero h2{font-size:calc(29px * var(--ui-scale));max-width:calc(350px * var(--ui-scale))}
+.hero p{font-size:calc(13px * var(--ui-scale))}
+.stat{font-size:calc(10px * var(--ui-scale));padding:calc(9px * var(--ui-scale)) calc(12px * var(--ui-scale))}
+.stat b{font-size:calc(19px * var(--ui-scale))}
+.tab{font-size:calc(13px * var(--ui-scale));padding:calc(12px * var(--ui-scale)) calc(8px * var(--ui-scale))}
+.section-head h3{font-size:calc(20px * var(--ui-scale))}
+.sub{font-size:calc(11px * var(--ui-scale))}
+.add-row input{font-size:calc(14px * var(--ui-scale));padding:calc(9px * var(--ui-scale)) calc(5px * var(--ui-scale))}
+.primary{font-size:calc(13px * var(--ui-scale));min-height:calc(42px * var(--ui-scale))}
+.chip{font-size:calc(11px * var(--ui-scale));padding:calc(7px * var(--ui-scale)) calc(11px * var(--ui-scale))}
+.task{padding:calc(14px * var(--ui-scale)) calc(13px * var(--ui-scale));gap:calc(11px * var(--ui-scale))}
+.task-text{font-size:calc(15px * var(--ui-scale))}
+.task-meta{font-size:calc(10px * var(--ui-scale))}
+.check{width:calc(26px * var(--ui-scale));height:calc(26px * var(--ui-scale))}
+.tiny{font-size:calc(16px * var(--ui-scale))}
+.note{padding:calc(15px * var(--ui-scale));min-height:calc(150px * var(--ui-scale))}
+.note h4{font-size:calc(17px * var(--ui-scale))}
+.note p{font-size:calc(12px * var(--ui-scale));line-height:1.65}
+.note-foot{font-size:calc(10px * var(--ui-scale))}
+.search-wrap{min-height:calc(48px * var(--ui-scale))}
+.search-wrap input{font-size:calc(13px * var(--ui-scale))}
+.search-caption{font-size:calc(10px * var(--ui-scale))}
+.field label{font-size:calc(11px * var(--ui-scale))}
+.field input,.field textarea,.field select{font-size:calc(14px * var(--ui-scale));padding:calc(12px * var(--ui-scale))}
+.font-choice{font-size:calc(12px * var(--ui-scale));padding:calc(9px * var(--ui-scale)) calc(12px * var(--ui-scale))}
+.preview-body{font-size:calc(17px * var(--ui-scale));line-height:1.85}
+.preview-date,.preview-kicker,.preview-palette-label{font-size:calc(10px * var(--ui-scale))}
+.preview-toolbar button{font-size:calc(13px * var(--ui-scale))}
+.preview-sheet{--preview-padding:calc(25px * var(--ui-scale))}
+.preview-content{padding-left:var(--preview-padding);padding-right:var(--preview-padding)}
+body[data-density="spacious"] .task-list{gap:calc(14px * var(--ui-scale))}
+body[data-density="spacious"] .task{padding-top:calc(19px * var(--ui-scale));padding-bottom:calc(19px * var(--ui-scale))}
+body[data-density="spacious"] .note-grid{gap:calc(16px * var(--ui-scale))}
+body[data-density="compact"] .task-list{gap:5px}
+body[data-density="compact"] .task{padding-top:8px;padding-bottom:8px}
+body[data-density="compact"] .note-grid{gap:7px}
+body[data-density="compact"] .note{min-height:calc(125px * var(--ui-scale));padding:calc(11px * var(--ui-scale))}
+.font-scale-row{display:flex;align-items:center;gap:10px;color:#c4ced5}
+.font-scale-row input{flex:1;accent-color:#e4773f;min-width:0}
+.font-scale-row strong{min-width:46px;text-align:right;color:#ffad7e;font:700 13px 'Space Grotesk'}
+.font-presets{margin-top:10px}
+@media(max-width:380px){.font-presets{gap:5px}.font-presets .font-choice{padding:8px 9px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand"><div class="logo"><img src="icons/icon.svg" alt="" style="width:100%;height:100%;border-radius:inherit"></div><div><h1>little things</h1><small>HERY'S PERSONAL SPACE</small></div></div>
+ <button class="icon-btn" id="settingsBtn" aria-label="Pengaturan">⚙</button>
+</header>
+<section class="hero">
+ <div class="eyebrow" id="greeting">PERSONAL ORGANIZER · HERY</div>
+ <h2>Daftar tugas & catatan.</h2>
+ <p>Kelola checklist, pantau progres, dan simpan catatan penting.</p>
+ <div class="stats"><div class="stat"><b id="todoCount">0</b>Tugas aktif</div><div class="stat"><b id="doneCount">0</b>Tugas selesai</div><div class="stat"><b id="noteCount">0</b>Total catatan</div></div>
+</section>
+<nav class="tabs"><button class="tab active" data-tab="tasks">☑️ My Lists</button><button class="tab" data-tab="notes">📝 My Notes</button></nav>
+<div class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Cari tugas atau catatan..." autocomplete="off"><button id="clearSearch" aria-label="Hapus pencarian">×</button></div>
+<div class="search-caption" id="searchCaption">Cari berdasarkan teks tugas, judul, atau isi catatan.</div>
+<section id="tasksPanel">
+ <div class="section-head"><div><h3>Hery's daily focus</h3><div class="sub">Tambah tugas, atur prioritas, dan tandai yang selesai.</div></div><span class="sub" id="taskProgress">0% done</span></div>
+ <div class="add-card"><div class="add-row"><input id="taskInput" placeholder="Tulis tugas baru..." maxlength="180"><button class="primary" id="addTask">+ Add</button></div>
+ <div class="mini-tools"><button class="chip selected" data-filter="all">Semua</button><button class="chip" data-filter="active">Aktif</button><button class="chip" data-filter="done">Selesai</button></div></div>
+ <div class="task-list" id="taskList"></div>
+</section>
+<section id="notesPanel" class="hidden">
+ <div class="section-head"><div><h3>Brain dump 🧠</h3><div class="sub">Simpan ide, informasi, dan catatan pribadi.</div></div><span class="sub" id="notesHint">Buka kartu untuk membaca</span></div>
+ <div class="note-grid" id="noteGrid"></div>
+</section>
+</div>
+<button class="fab" id="fab" aria-label="Tambah">＋</button>
+<div class="modal-bg" id="noteModal"><div class="modal">
+ <div class="modal-top"><h3 id="noteModalTitle">Catatan baru ✍️</h3><button class="close" data-close="noteModal">×</button></div>
+ <input type="hidden" id="noteId">
+ <div class="field"><label>JUDUL</label><input id="noteTitle" placeholder="Judul catatan..." maxlength="90"></div>
+ <div class="field"><label>ISI CATATAN</label><textarea id="noteBody" placeholder="Tulis isi catatan..."></textarea></div>
+ <div class="field"><label>GAYA TULISAN</label><div class="settings-row" id="fontChoices"><button class="font-choice active" data-font="DM Sans">Modern</button><button class="font-choice" data-font="Nunito">Friendly</button><button class="font-choice" data-font="Playfair Display">Classic</button></div></div>
+ <div class="modal-actions"><button class="secondary" id="deleteNote" style="display:none">Hapus</button><button class="primary" id="saveNote">Simpan catatan ✓</button></div>
+</div></div>
+
+<div class="preview-bg" id="previewModal">
+ <article class="preview-sheet theme-charcoal" id="previewSheet">
+  <div class="preview-toolbar">
+   <button class="preview-back" id="closePreview">← Kembali</button>
+   <div class="preview-tools"><button id="previewEdit">✎ Edit</button><button id="previewShare">↗ Bagikan</button></div>
+  </div>
+  <div class="preview-content">
+   <div class="preview-kicker">CATATAN PRIBADI</div>
+   <h1 id="previewTitle">Judul catatan</h1>
+   <div class="preview-date" id="previewDate"></div>
+   <div class="preview-body" id="previewBody"></div>
+  </div>
+  <div class="preview-bottom">
+   <div class="preview-palette-label">WARNA LATAR</div>
+   <div class="preview-palette">
+    <button class="swatch active" data-theme="charcoal" aria-label="Charcoal"><i></i><span>Charcoal</span></button>
+    <button class="swatch" data-theme="paper" aria-label="Paper"><i></i><span>Paper</span></button>
+    <button class="swatch" data-theme="forest" aria-label="Forest"><i></i><span>Forest</span></button>
+    <button class="swatch" data-theme="sand" aria-label="Sand"><i></i><span>Sand</span></button>
+    <button class="swatch" data-theme="navy" aria-label="Navy"><i></i><span>Navy</span></button>
+   </div>
+  </div>
+ </article>
+</div>
+<div class="modal-bg" id="settingsModal"><div class="modal">
+ <div class="modal-top"><h3>Pengaturan Hery ⚙️</h3><button class="close" data-close="settingsModal">×</button></div>
+ <p class="sub">Preferensi tampilan disimpan otomatis di perangkat ini.</p>
+ <div class="field"><label>UKURAN TULISAN & TAMPILAN</label>
+  <div class="font-scale-row"><span>A</span><input id="fontScale" type="range" min="85" max="165" step="5" value="115"><strong id="fontScaleLabel">115%</strong><span style="font-size:21px">A</span></div>
+  <div class="settings-row font-presets">
+   <button class="font-choice" data-scale="90">Compact</button>
+   <button class="font-choice" data-scale="100">Normal</button>
+   <button class="font-choice active" data-scale="115">Large</button>
+   <button class="font-choice" data-scale="130">XL</button>
+   <button class="font-choice" data-scale="150">XXL</button>
+  </div>
+  <p class="sub" style="margin-top:9px">Mengatur skala teks, tombol, kartu, dan jarak.</p>
+ </div>
+ <div class="field"><label>KEPADATAN TAMPILAN</label><div class="settings-row">
+  <button class="font-choice active" data-density="comfortable">Nyaman</button>
+  <button class="font-choice" data-density="spacious">Lapang</button>
+  <button class="font-choice" data-density="compact">Ringkas</button>
+ </div></div>
+ <div class="field"><label>DATA & CADANGAN</label><div class="settings-row"><button class="chip" id="exportBtn">⬇ Export JSON</button><button class="chip" id="importBtn">⬆ Import JSON</button><input type="file" id="importFile" accept=".json,application/json" hidden></div></div>
+ <div class="field"><label>TIPS</label><p class="sub">My Lists: checklist dan progres tugas. My Notes: ide dan catatan. Export JSON untuk membuat cadangan data.</p></div>
+ <button class="secondary" data-close="settingsModal" style="width:100%;padding:14px">Tutup</button>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='littleThings.v1';
+let state={tasks:[],notes:[],filter:'all',fontSize:16,fontScale:115,density:'comfortable'};
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)state={...state,...saved}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('Penyimpanan penuh. Export data dulu ya.')}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateLabel=()=>new Intl.DateTimeFormat('id-ID',{day:'numeric',month:'short'}).format(new Date());
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function applyDisplaySettings(){
+ const scale=Math.max(85,Math.min(165,Number(state.fontScale)||115));
+ document.documentElement.style.setProperty('--ui-scale',String(scale/100));
+ document.body.dataset.density=state.density||'comfortable';
+ const slider=$('fontScale');if(slider)slider.value=scale;
+ const label=$('fontScaleLabel');if(label)label.textContent=scale+'%';
+ document.querySelectorAll('[data-scale]').forEach(b=>b.classList.toggle('active',Number(b.dataset.scale)===scale));
+ document.querySelectorAll('[data-density]').forEach(b=>b.classList.toggle('active',b.dataset.density===(state.density||'comfortable')));
+}
+function currentQuery(){return $('globalSearch')?.value.trim().toLocaleLowerCase('id-ID')||''}
+function render(){
+ const active=state.tasks.filter(t=>!t.done).length,done=state.tasks.length-active;
+ $('todoCount').textContent=active;$('doneCount').textContent=done;$('noteCount').textContent=state.notes.length;
+ $('taskProgress').textContent=(state.tasks.length?Math.round(done/state.tasks.length*100):0)+'% done';
+ document.documentElement.style.setProperty('--user-font-size',state.fontSize+'px');
+ const q=currentQuery();
+ const shown=state.tasks.filter(t=>(state.filter==='all'||(state.filter==='active'?!t.done:t.done))&&(!q||t.text.toLocaleLowerCase('id-ID').includes(q)));
+ $('taskList').innerHTML=shown.length?shown.map(t=>`<div class="task ${t.done?'done':''} ${q?'search-hit':''}" data-id="${t.id}"><button class="check" data-action="toggle" aria-label="Selesai">${t.done?'✓':''}</button><div class="task-text">${esc(t.text)}<div class="task-meta">${t.priority==='high'?'<span class="priority"></span>Prioritas · ':''}${esc(t.date||'')}</div></div><div class="task-actions"><button class="tiny" data-action="priority" title="Prioritas">☆</button><button class="tiny" data-action="delete" title="Hapus">×</button></div></div>`).join(''):'<div class="empty"><div class="emoji">⌕</div><b>'+(q?'Tidak ada list yang cocok, Hery':'Belum ada item di sini, Hery')+'</b>'+(q?'Coba kata kunci lain.':'Tambahkan satu hal kecil untuk memulai, Hery.')+'</div>';
+ const notes=state.notes.filter(n=>!q||(`${n.title||''} ${n.body||''}`).toLocaleLowerCase('id-ID').includes(q));
+ $('noteGrid').innerHTML=notes.length?notes.slice().reverse().map(n=>`<article class="note ${q?'search-hit':''}" data-id="${n.id}" style="font-family:'${esc(n.font||'DM Sans')}'"><h4>${esc(n.title||'Tanpa judul')}</h4><p>${esc(n.body||'')}</p><div class="note-foot"><span>${esc(n.date||'')}</span><span class="note-actions"><button data-action="pin" title="Pin">${n.pin?'📌':'📍'}</button><button data-action="edit" title="Edit">✎</button></span></div></article>`).join(''):'<div class="empty" style="grid-column:1/-1"><div class="emoji">⌕</div><b>'+(q?'Tidak ada catatan yang cocok, Hery':'Halaman baru menunggu ide Hery')+'</b>'+(q?'Periksa ejaan atau coba kata kunci lain.':'Tekan tombol + untuk menulis catatan pertamamu, Hery.')+'</div>';
+ $('searchCaption').textContent=q?`Hasil pencarian “${$('globalSearch').value.trim()}” — ${shown.length} list dan ${notes.length} catatan ditemukan.`:'Cari berdasarkan teks tugas, judul, atau isi catatan.';
+ save();
+}
+let previewNoteId=null;
+function showPreview(n){
+ previewNoteId=n.id;
+ $('previewTitle').textContent=n.title||'Tanpa judul';
+ $('previewBody').textContent=n.body||'Tidak ada isi catatan.';
+ $('previewDate').textContent=n.date||'';
+ const theme=n.previewTheme||'charcoal';
+ setPreviewTheme(theme);
+ $('previewModal').classList.add('show');
+ document.body.style.overflow='hidden';
+}
+function setPreviewTheme(theme){
+ $('previewSheet').className='preview-sheet theme-'+theme;
+ document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.theme===theme));
+ const n=state.notes.find(x=>x.id===previewNoteId);
+ if(n){n.previewTheme=theme;save()}
+}
+$('closePreview').onclick=()=>{$('previewModal').classList.remove('show');document.body.style.overflow=''};
+$('previewEdit').onclick=()=>{const n=state.notes.find(x=>x.id===previewNoteId);$('previewModal').classList.remove('show');document.body.style.overflow='';if(n)openNote(n)};
+$('previewShare').onclick=async()=>{
+ const title=$('previewTitle').textContent,body=$('previewBody').textContent;
+ const text=`${title}\n\n${body}`;
+ try{if(navigator.share)await navigator.share({title,text});else if(navigator.clipboard){await navigator.clipboard.writeText(text);toast('Catatan disalin, Hery.')}else toast('Fitur berbagi tidak tersedia di browser ini.')}catch(e){}
+};
+document.querySelectorAll('.swatch').forEach(b=>b.onclick=()=>setPreviewTheme(b.dataset.theme));
+$('globalSearch').addEventListener('input',()=>render());
+$('clearSearch').onclick=()=>{$('globalSearch').value='';render();$('globalSearch').focus()};
+function addTask(){const v=$('taskInput').value.trim();if(!v)return toast('Hery, tulis dulu hal yang ingin kamu lakukan 🙂');state.tasks.unshift({id:crypto.randomUUID?.()||String(Date.now()),text:v,done:false,priority:'normal',date:dateLabel()});$('taskInput').value='';render();toast('Masuk daftar, Hery. Gas! ✨')}
+$('addTask').onclick=addTask;$('taskInput').addEventListener('keydown',e=>{if(e.key==='Enter')addTask()});
+$('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const row=b.closest('.task'),t=state.tasks.find(x=>x.id===row.dataset.id);if(!t)return;if(b.dataset.action==='toggle')t.done=!t.done;if(b.dataset.action==='priority')t.priority=t.priority==='high'?'normal':'high';if(b.dataset.action==='delete')state.tasks=state.tasks.filter(x=>x.id!==t.id);render()});
+document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{state.filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('selected',x===b));render()});
+function openNote(n){$('noteId').value=n?.id||'';$('noteTitle').value=n?.title||'';$('noteBody').value=n?.body||'';$('noteModalTitle').textContent=n?'Edit catatan ✍️':'Catatan baru ✍️';$('deleteNote').style.display=n?'block':'none';document.querySelectorAll('[data-font]').forEach(b=>b.classList.toggle('active',b.dataset.font===(n?.font||'DM Sans')));$('noteModal').classList.add('show')}
+function saveNote(){const title=$('noteTitle').value.trim(),body=$('noteBody').value.trim();if(!title&&!body)return toast('Catatan masih kosong 🙂');const id=$('noteId').value;const font=document.querySelector('[data-font].active')?.dataset.font||'DM Sans';if(id){const n=state.notes.find(x=>x.id===id);if(n)Object.assign(n,{title,body,font})}else state.notes.push({id:crypto.randomUUID?.()||String(Date.now()),title,body,font,date:dateLabel(),pin:false});$('noteModal').classList.remove('show');render();toast('Catatan Hery tersimpan.')}
+$('saveNote').onclick=saveNote;$('deleteNote').onclick=()=>{const id=$('noteId').value;state.notes=state.notes.filter(n=>n.id!==id);$('noteModal').classList.remove('show');render();toast('Catatan dihapus')};
+$('noteGrid').addEventListener('click',e=>{const card=e.target.closest('.note');if(!card)return;const n=state.notes.find(x=>x.id===card.dataset.id);if(!n)return;const action=e.target.closest('[data-action]')?.dataset.action;if(action==='pin'){n.pin=!n.pin;render();return}if(action==='edit'){openNote(n);return}showPreview(n)});
+document.querySelectorAll('[data-font]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-font]').forEach(x=>x.classList.toggle('active',x===b))});
+$('fab').onclick=()=>{if(!$('notesPanel').classList.contains('hidden'))openNote();else{$('taskInput').focus();window.scrollTo({top:0,behavior:'smooth'})}};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));$('tasksPanel').classList.toggle('hidden',b.dataset.tab!=='tasks');$('notesPanel').classList.toggle('hidden',b.dataset.tab!=='notes');$('fab').setAttribute('aria-label',b.dataset.tab==='notes'?'Tambah catatan':'Tambah tugas')});
+$('settingsBtn').onclick=()=>$('settingsModal').classList.add('show');
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$ (b.dataset.close).classList.remove('show'));
+$('fontScale').oninput=e=>{state.fontScale=Number(e.target.value);applyDisplaySettings();save()};
+document.querySelectorAll('[data-scale]').forEach(b=>b.onclick=()=>{state.fontScale=Number(b.dataset.scale);applyDisplaySettings();save();toast('Ukuran tampilan diubah, Hery.')});
+document.querySelectorAll('[data-density]').forEach(b=>b.onclick=()=>{state.density=b.dataset.density;applyDisplaySettings();save();toast('Kepadatan tampilan diubah.')});
+$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='LITTLE_THINGS_BACKUP_'+new Date().toISOString().slice(0,10).replaceAll('-','')+'.json';a.click();URL.revokeObjectURL(a.href);toast('Backup siap diunduh')};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.tasks)||!Array.isArray(d.notes))throw Error();if(!confirm('Ganti data saat ini dengan isi file backup?'))return;state={...state,...d};render();toast('Backup berhasil dipulihkan')}catch(err){toast('File backup tidak valid')}e.target.value=''};
+$('greeting').textContent='HERY’S SPACE  •  '+new Intl.DateTimeFormat('id-ID',{weekday:'long',day:'numeric',month:'long'}).format(new Date()).toUpperCase();
+applyDisplaySettings();
+render();
+// Register the offline cache when served from HTTPS or localhost.
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js', { scope: './' }).catch(err => console.warn('PWA service worker:', err)));
+}
+</script>
+</body></html>
