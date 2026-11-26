@@ -220,6 +220,29 @@ body[data-palette] .brand h1,body[data-palette] .section-head h3{color:var(--ink
 @media(max-width:500px){.image-ref-controls button{padding:8px 10px} .image-ref-top h3{font-size:15px}}
 
 .hero{display:none!important}
+
+/* Stronger typography and borders for image-reference / note workspace */
+#imageRefModal{font-weight:600}
+.image-ref-top{border-bottom:2px solid #536977;margin-bottom:4px}
+.image-ref-top h3{font-size:19px!important;font-weight:900!important;letter-spacing:.15px}
+.image-ref-controls button,.image-ref-note button{border-width:2px!important;font-weight:800!important;}
+.image-ref-controls button{font-size:14px}
+.image-ref-stage{border:2px solid #536977!important;background:#0c151d!important}
+.image-ref-note{border:2px solid #536977!important;background:#14212b!important;box-shadow:0 2px 12px #0003}
+.image-ref-note h4{font-size:18px!important;font-weight:900!important;color:#f5f8fa}
+.image-ref-note label{font-size:12px!important;font-weight:900!important;color:#d4e0e7!important;letter-spacing:.06em}
+.image-ref-note input[type=text],.image-ref-note textarea{border:2px solid #526978!important;font-size:16px!important;font-weight:600!important;color:#fff!important;background:#0c151d!important}
+.image-ref-note textarea{line-height:1.7!important}
+.image-ref-note textarea::placeholder,.image-ref-note input::placeholder{color:#91a4b2!important;font-weight:500}
+.image-ref-note .note-ref-save{font-size:16px!important;font-weight:900!important}
+#imageRefReview .sub{font-size:14px!important;font-weight:700!important;color:#d0dce4!important}
+#imageRefReviewTitle{font-size:21px!important;font-weight:900!important;line-height:1.35!important;color:#fff!important;border-bottom:2px solid #536977;padding-bottom:9px}
+#imageRefReviewBody{font-size:17px!important;font-weight:650!important;line-height:1.8!important;color:#f4f7f9!important}
+#imageRefReviewBody .review-check{padding:5px 0!important;font-weight:700!important}
+#imageRefReview .note-ref-actions button{font-size:14px!important;font-weight:900!important;border-width:2px!important}
+.image-ref-foot{font-size:13px!important;font-weight:650!important;color:#c4d0d8!important}
+@media(max-width:760px){.image-ref-note textarea{font-size:16px!important;line-height:1.65!important}}
+
 </style>
 </head>
 <body>
