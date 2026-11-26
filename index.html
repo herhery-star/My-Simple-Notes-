@@ -247,6 +247,33 @@ body[data-palette] .brand h1,body[data-palette] .section-head h3{color:var(--ink
 /* Icon-only image source controls */
 .image-ref-controls .icon-only{min-width:42px;width:42px;height:42px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
 
+
+/* Unified theme across all app screens, including temporary image-reference and review */
+body[data-palette] #imageRefModal,body[data-palette] #imageRefReview{background:var(--bg);color:var(--ink)}
+body[data-palette] .image-ref-top h3,body[data-palette] #imageRefReview h3{color:var(--ink)}
+body[data-palette] .image-ref-controls button{background:var(--surface2);color:var(--ink);border-color:var(--line)}
+body[data-palette] .image-ref-controls .ref-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+body[data-palette] .image-ref-controls .icon-only{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+body[data-palette] .image-ref-stage{background:var(--surface2);border-color:var(--line)}
+body[data-palette] .image-ref-empty,body[data-palette] .image-ref-foot{color:var(--muted)}
+body[data-palette] .image-ref-note{background:var(--paper);color:var(--ink);border-color:var(--line)}
+body[data-palette] .image-ref-note h4{color:var(--ink)}
+body[data-palette] .image-ref-note label{color:var(--muted)}
+body[data-palette] .image-ref-note input[type=text],body[data-palette] .image-ref-note textarea{background:var(--bg);color:var(--ink);border-color:var(--line)}
+body[data-palette] .image-ref-note button{background:var(--surface2);color:var(--ink);border-color:var(--line)}
+body[data-palette] .image-ref-note button.primary,body[data-palette] .image-ref-note .note-ref-save{background:var(--accent);color:#fff;border-color:var(--accent)}
+body[data-palette] .image-ref-note button.selected{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+body[data-palette] #imageRefReviewBody{background:var(--paper);color:var(--ink);border-color:var(--line)}
+body[data-palette] #imageRefReviewBody .review-title{color:var(--ink)}
+body[data-palette] #imageRefReviewBody .review-check{color:var(--ink)}
+body[data-palette] #imageRefReviewBody .review-check input{accent-color:var(--accent)}
+body[data-palette] #imageRefReview .secondary{background:var(--surface2);color:var(--ink);border-color:var(--line)}
+body[data-palette] #imageRefReview .primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+body[data-palette] .image-ref-zoom input{accent-color:var(--accent)}
+body[data-palette] #imageRefExitConfirm{background:var(--bg);color:var(--ink)}
+body[data-palette] #imageRefExitConfirm button{background:var(--surface2);color:var(--ink);border-color:var(--line)}
+body[data-palette] #imageRefExitConfirm .primary{background:var(--accent);color:#fff}
+
 </style>
 </head>
 <body>
@@ -339,6 +366,7 @@ body[data-palette] .brand h1,body[data-palette] .section-head h3{color:var(--ink
  </div>
  <div class="field"><label>PALET WARNA</label><p class="sub" style="margin:0 0 9px">Pilih suasana warna yang paling kamu suka. Perubahan langsung diterapkan dan tersimpan di perangkat.</p>
   <div class="palette-grid" id="paletteChoices">
+   <button class="palette-option" data-palette="original"><span class="palette-dots"><i style="background:#101820"></i><i style="background:#e4773f"></i><i style="background:#f4f4f4"></i><i style="background:#273641"></i></span><span class="palette-copy"><b>Original · Orange / Hitam / Putih</b><small>Default · tegas · kontras</small></span></button>
    <button class="palette-option" data-palette="citrus"><span class="palette-dots"><i style="background:#fff9e9"></i><i style="background:#f7b84b"></i><i style="background:#ef8b35"></i><i style="background:#e7edc8"></i></span><span class="palette-copy"><b>Citrus Pop</b><small>Cerah · energik · playful</small></span></button>
    <button class="palette-option" data-palette="ocean"><span class="palette-dots"><i style="background:#edf8fb"></i><i style="background:#45b9c8"></i><i style="background:#f07868"></i><i style="background:#cce8ec"></i></span><span class="palette-copy"><b>Ocean Breeze</b><small>Sejuk · segar · santai</small></span></button>
    <button class="palette-option" data-palette="berry"><span class="palette-dots"><i style="background:#f8f0fb"></i><i style="background:#a77ad5"></i><i style="background:#df6fa6"></i><i style="background:#e2d1f0"></i></span><span class="palette-copy"><b>Berry Sorbet</b><small>Manis · kreatif · fun</small></span></button>
